@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    08/26/2025  04:38:02  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    08/26/2025  23:02:07  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
@@ -12,6 +12,9 @@ MEMORY MODEL: SMALL
 INPUT MODULES INCLUDED:
   .\Objects\STARTUP.obj (?C_STARTUP)
   .\Objects\main.obj (MAIN)
+  D:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+  D:\KEIL_V5\C51\LIB\C51S.LIB (?C?IMUL)
+  D:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULDIV)
 
 
 LINK MAP OF MODULE:  .\Objects\03Key (?C_STARTUP)
@@ -22,28 +25,72 @@ LINK MAP OF MODULE:  .\Objects\03Key (?C_STARTUP)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            IDATA   0008H     0001H     UNIT         ?STACK
+            DATA    0008H     0014H     UNIT         ?DT?MAIN
+            DATA    001CH     0007H     UNIT         _DATA_GROUP_
+            IDATA   0023H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
                     0003H     07FDH                  *** GAP ***
-            CODE    0800H     000CH     UNIT         ?C_C51STARTUP
-            CODE    080CH     0005H     UNIT         ?PR?MAIN?MAIN
+            CODE    0800H     00E0H     UNIT         ?C?LIB_CODE
+            CODE    08E0H     008CH     UNIT         ?C_C51STARTUP
+            CODE    096CH     0076H     UNIT         ?PR?SMG_SHOW?MAIN
+            CODE    09E2H     0058H     UNIT         ?PR?_SMG_NUM?MAIN
+            CODE    0A3AH     0021H     UNIT         ?PR?KEY_SCAN?MAIN
+            CODE    0A5BH     001FH     UNIT         ?PR?MAIN?MAIN
+            CODE    0A7AH     001BH     UNIT         ?PR?_DELAYMS?MAIN
+            CODE    0A95H     001BH     UNIT         ?C_INITSEG
+            CODE    0AB0H     0005H     UNIT         ?PR?DELAY10US?MAIN
 
 
 
 OVERLAY MAP OF MODULE:   .\Objects\03Key (?C_STARTUP)
 
 
-SEGMENT
-  +--> CALLED SEGMENT
----------------------
-?C_C51STARTUP
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
   +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                  001CH    0001H
+  +--> ?PR?_SMG_NUM?MAIN
+  +--> ?PR?SMG_SHOW?MAIN
+  +--> ?PR?KEY_SCAN?MAIN
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  08/26/2025  23:02:07  PAGE 2
+
+
+?PR?_SMG_NUM?MAIN              001DH    0006H
+
+?PR?SMG_SHOW?MAIN              -----    -----
+  +--> ?PR?DELAY10US?MAIN
+
+?PR?KEY_SCAN?MAIN              -----    -----
+  +--> ?PR?_DELAYMS?MAIN
+
+?PR?_DELAYMS?MAIN              -----    -----
+  +--> ?PR?DELAY10US?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\03Key (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C?IMUL
+  C:0800H         PUBLIC        ?C?IMUL
+  -------         ENDMOD        ?C?IMUL
+
+  -------         MODULE        ?C?ULDIV
+  C:084EH         PUBLIC        ?C?ULDIV
+  -------         ENDMOD        ?C?ULDIV
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0014H BYTE ( 0%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0157H BYTE (16%) *
 ******************************************************************************
 
-Program Size: data=9.0 xdata=0 code=20
+Program Size: data=36.0 xdata=0 code=696
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

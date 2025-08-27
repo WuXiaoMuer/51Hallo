@@ -1,26 +1,8 @@
-#include <STC89C5xRC.H>
-
-typedef unsigned char u8;
-	
 unsigned char smg_code[11]={0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f, 0x00};
 
 
-void Delay10us(void)	//@11.0592MHz
-{
-	unsigned char data i;
-
-	i = 2;
-	while (--i);
-}
-
-void Delayms(unsigned int ms){
-	ms *= 100;
-	while(ms--){
-	Delay10us();
-	}
-}
-
 unsigned char smg_buff[8]={10,10,10,10,10,10,10,10};//0-9
+
 void smg_show(void){
 	int i = 0;
 	for(i=0; i<8; i++){
@@ -44,31 +26,5 @@ void smg_num(unsigned long num){
 	for(i=7;i>=0;i--){
 		smg_buff[i] = num%10;
 		num /= 10;
-	}
-}
-u8 key_scan(void){
-	static u8 key=1;
-	if(key==1 && (P31 == 0)){
-		Delayms(20);
-		key=0;
-		if(P31 == 0) return 1;
-	}else if(P31 == 1 ){
-		key=1;
-	}
-	return 0;
-}
-void main(){
-	unsigned long num = 00000000;
-	u8 key=0;
-	//Delayms(1000);
-	
-	//smg_buff[0]=0;
-	smg_num(num);
-	while(1){
-		smg_show();
-		key = key_scan();
-		if(key == 1){
-			P20=!P20;
-		}
 	}
 }
