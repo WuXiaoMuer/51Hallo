@@ -1,0 +1,28 @@
+# Keil uVision build outputs
+Objects/
+Listings/
+*.lst
+*.m51
+*.obj
+*.omf
+*.map
+*.hex
+*.bin
+*.lx51
+*.lnp
+*.dep
+
+# uVision user/local settings
+*.uvgui.*
+*.uvopt
+*.uvoptx
+*.uvgui
+
+# Misc
+*.bak
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+
+
